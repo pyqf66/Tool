@@ -56,36 +56,38 @@ class OutputWithTemplate(object):
 
             # 数据格式为{"sheet页数":{"列数":[当前添加的数据1,当前添加的数据2]}}
             filter_dict = dict()
-            # 为列数dict
-            data_col_num_dict = dict()
             logger.debug("++++++++++++++++++++++++++++++")
             logger.debug(data_list)
             # 以追加方式添加数据
             for data_num in range(len(data_list[0])):
                 logger.debug(data_num)
                 logger.debug(data_list)
+                # 当前sheet的索引
                 data_sheet_num = int(data_list[0][data_num]) - 1
                 data_row_num = 1
                 data_col_num = int(data_list[1][data_num]) - 1
                 logger.debug("===================================")
+                logger.debug(data_sheet_num)
                 logger.debug(data_col_num)
                 # 判断当前sheet页数是否在filter_dict中，即当前sheet是否曾经出现过
                 if str(data_sheet_num) not in filter_dict:
-                    # 当前sheet页数不存在filter_dict,增加对应列数的数据list
-                    data_col_num_dict[str(data_col_num)] = list()
+                    # 当前sheet页数不存在filter_dict,添加对应data_sheet_num字典
+                    filter_dict[str(data_sheet_num)] = {}
+                    # 增加对应列数的数据list
+                    filter_dict[str(data_sheet_num)][str(data_col_num)] = list()
                     # 由于sheet页数第一次出现，故数据也一定第一次出现，所以之列列表中添加值
-                    data_col_num_dict[str(data_col_num)].append(data_col_num)
-                    # 列数字典放到sheet页数key中
-                    filter_dict[str(data_sheet_num)] = data_col_num_dict
+                    filter_dict[str(data_sheet_num)][str(data_col_num)].append(data_col_num)
                 else:
                     # 当前sheet页数存在filter_dict中，判断当前列数是否在列数字典中，即当前列数是否出现过
                     if str(data_col_num) not in filter_dict[str(data_sheet_num)]:
-                        # 当前列数未出现过。向列数字典列表插数据，但插入数据的当前行数为初始值，即1
+                        # 当前列数未出现过,添加列表
+                        filter_dict[str(data_sheet_num)][str(data_col_num)] = list()
+                        # 向列数字典列表插数据，但插入数据的当前行数为初始值，即1
                         filter_dict[str(data_sheet_num)][str(data_col_num)].append(data_col_num)
                     else:
                         # 当前列数出现过。向列数字典列表插数据，插入数据的当前行数为总出现的次数
                         filter_dict[str(data_sheet_num)][str(data_col_num)].append(data_col_num)
-                        data_row_num = len(data_col_num_dict[str(data_col_num)])
+                        data_row_num = len(filter_dict[str(data_sheet_num)][str(data_col_num)])
                 logger.debug(filter_dict)
                 data_preview_add = data_list[2][data_num]
                 # 向excel中插入数据
