@@ -16,11 +16,13 @@ from util.logger import logger
 
 
 class HttpUrlConnection(object):
-    u''' 
-        methon为请求方法
-        parameter为请求参数
-        cookie为获取的cookie
-        headers为请求头
+    '''
+    :function __init__: 构造方法
+    :function request: 不带cookie的请求
+    :function request_with_cookies: 带cookie的请求
+    :function get_host: 提供外部host数据
+    :function get_path: 提供外部path数据
+    :function get_parameters_urlencode_deal: 提供外部经过ulrencode处理后的数据
     '''
 
     # 处理预置数据
@@ -29,13 +31,13 @@ class HttpUrlConnection(object):
                  get_cookie_headers=[('User-agent', 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)')]):
         '''
         :param url: 请求使用的url，由于发送cookie的请求方法可以单独传url故此参数非必填。使用request方法请求时必填。
-        :param method:请求的方法
-        :param parameters:请求的参数
-        :param cookie:cookie
-        :param headers:请求头
-        :param get_cookie_url:获取cookie的url
-        :param get_cookie_request_data:获取cookie时需要传的参数
-        :param get_cookie_headers:获取cookie时需要加的请求头
+        :param method: 请求的方法
+        :param parameters: 请求的参数
+        :param cookie: cookie
+        :param headers: 请求头
+        :param get_cookie_url: 获取cookie的url,如果调用request_with_cookies时此参数必须传
+        :param get_cookie_request_data: 获取cookie时需要传的参数
+        :param get_cookie_headers: 获取cookie时需要加的请求头
         '''
         try:
             # 解析url
@@ -69,11 +71,14 @@ class HttpUrlConnection(object):
             self.__jdata = simplejson.dumps(parameters, ensure_ascii=False)
             self.__headers = headers
             self.__opener = None
+            self.__get_cookie_request_data=None
             if get_cookie_url is not None:
                 cj = cookiejar.CookieJar()
                 self.__opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
                 self.__opener.addheaders = get_cookie_headers
-                self.__opener.open(get_cookie_url, urllib.parse.urlencode(get_cookie_request_data).encode("utf-8"))
+                if get_cookie_request_data is not None:
+                    self.__get_cookie_request_data=urllib.parse.urlencode(get_cookie_request_data).encode("utf-8")
+                self.__opener.open(get_cookie_url,self.__get_cookie_request_data)
         except Exception as e:
             logger.error(e)
             logger.exception(u"捕获到错误如下:")
@@ -104,20 +109,33 @@ class HttpUrlConnection(object):
 
     # 使用urllib.request发送带cookie的请求
     def request_with_cookies(self, url=None, parameters=None):
+        '''
+        :param url: 请求的url
+        :param parameters: 请求的参数
+        :return: 返回响应对象
+
+        e.g.
+            post_data = {'username': 'admin@suolong', 'password': '123456'}
+            loginUrl = "http://test2.ishop-city.com/reconciliation/admin/user/login.json"
+            testUrl = 'http://test2.ishop-city.com/reconciliation/repayCheck/gethuizong.json'
+            http_object = HttpUrlConnection(get_cookie_url=loginUrl, get_cookie_request_data=post_data)
+            opener=http_object.request_with_cookies()
+            result=opener.open(testUrl)
+            print(result.readlines())
+        '''
         try:
+            #实例化HttpUrlConnection时如果没传url则将request_with_cookies的url赋给self.__url
             if self.__url is None:
                 self.__url = url
+            #实例化HttpUrlConnection时如果没传parameters则将request_with_cookies的parameters赋给self.__url
             if self.__data is None:
                 self.__data = parameters
-            if self.__opener is None:
-                cj = cookiejar.CookieJar()
-                cj.set_cookie(self.__cookie)
-                opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
-                request = urllib.request.Request(self.__url, self.__data)
-                html = opener.open(request)
-            else:
+            #已带cookie的对象必须存在且请求的链接url必传
+            if self.__opener is not None and self.__url is not None:
                 html = self.__opener.open(self.__url, self.__data)
-            return html
+                return html
+            else:
+                return 0
         except Exception as e:
             logger.error(e)
             logger.exception(u"捕获到错误如下:")
