@@ -7,9 +7,12 @@
 # 如果需要打日志则直接配置logging进行日志输出即可
 #
 #########################################################
+import sys
+sys.path.append("../")
 import pytest
 from util.logger import logger
 
+logger.debug("测试")
 
 # 被测函数
 def tmp_func1(param1):
