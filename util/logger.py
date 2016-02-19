@@ -6,7 +6,6 @@
 # History: 2016/1/28 zhangyufeng 新建
 ###########################################
 import os
-import platform
 import logging
 import logging.config
 
