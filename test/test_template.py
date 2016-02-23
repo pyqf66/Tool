@@ -48,3 +48,12 @@ def test_tmp_func2(tmp_fixture):
 def test_tmp_func3(input,expected):
     assert tmp_func1(input) == expected
 
+
+#########################################################
+#
+# 如何不想使用命令执行测试而是想在Run.py中直接执行
+# 则在Run.py中添加可执行的pytest.main()
+# pytest.main()中不添加参数则运行项目中所有的符合条件的文件
+#
+#########################################################
+
