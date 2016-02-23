@@ -5,12 +5,21 @@
 # Author: zhangyufeng
 # History: 2015/11/15 zhangyufeng 新建
 ###########################################
-import http
-from http import client
-from http import cookiejar
-import urllib.parse
-import urllib.request
+import sys
 import simplejson
+
+if sys.version_info[0]==2:
+    import httplib as http_client
+    import urllib as urllib_parse
+    import urllib2 as urllib_request
+    import cookielib as ckjar
+
+if sys.version_info[0]==3:
+    import http
+    from http import client as http_client
+    from http import cookiejar as ckjar
+    import urllib.parse as urllib_parse
+    import urllib.request as urllib_request
 
 from util.logger import logger
 
@@ -44,15 +53,18 @@ class HttpUrlConnection(object):
             if url is None:
                 self.__url = None
             else:
-                if type(url) == bytes:
-                    self.__url = url.decode("utf-8")
-                if type(url) == str:
-                    self.__url = url
+                try:
+                    if type(url) == bytes:
+                        self.__url = url.decode("utf-8")
+                    if type(url) == str:
+                        self.__url = url
+                except:
+                    self.__url=url
                 logger.debug(self.__url)
-                scheme, rest = urllib.parse.splittype(self.__url)
+                scheme, rest = urllib_parse.splittype(self.__url)
                 # 拆分域名和路径
                 logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-                self.__host_absolutely, self.__path = urllib.parse.splithost(rest)
+                self.__host_absolutely, self.__path = urllib_parse.splithost(rest)
                 host_list = self.__host_absolutely.split(":")
                 if len(host_list) == 1:
                     self.__host = host_list[0]
@@ -65,7 +77,7 @@ class HttpUrlConnection(object):
             self.__data = parameters
             self.__cookie = cookie
             if parameters != None:
-                self.__parameters_urlencode_deal = urllib.parse.urlencode(parameters)
+                self.__parameters_urlencode_deal = urllib_parse.urlencode(parameters)
             else:
                 self.__parameters_urlencode_deal = ""
             self.__jdata = simplejson.dumps(parameters, ensure_ascii=False)
@@ -73,11 +85,11 @@ class HttpUrlConnection(object):
             self.__opener = None
             self.__get_cookie_request_data=None
             if get_cookie_url is not None:
-                cj = cookiejar.CookieJar()
-                self.__opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+                cj = ckjar.CookieJar()
+                self.__opener = urllib_request.build_opener(urllib_request.HTTPCookieProcessor(cj))
                 self.__opener.addheaders = get_cookie_headers
                 if get_cookie_request_data is not None:
-                    self.__get_cookie_request_data=urllib.parse.urlencode(get_cookie_request_data).encode("utf-8")
+                    self.__get_cookie_request_data=urllib_parse.urlencode(get_cookie_request_data).encode("utf-8")
                 self.__opener.open(get_cookie_url,self.__get_cookie_request_data)
         except Exception as e:
             logger.error(e)
@@ -86,7 +98,7 @@ class HttpUrlConnection(object):
     # 发送普通请求,要求完全满足http协议规则
     def request(self):
         try:
-            conn = client.HTTPConnection(self.__host, self.__port)
+            conn = http_client.HTTPConnection(self.__host, self.__port)
             if self.__method == "GET":
                 self.path = self.__path + self.__parameters_urlencode_deal
                 conn.request(self.__method, self.__path)
@@ -119,8 +131,7 @@ class HttpUrlConnection(object):
             loginUrl = "http://test2.ishop-city.com/reconciliation/admin/user/login.json"
             testUrl = 'http://test2.ishop-city.com/reconciliation/repayCheck/gethuizong.json'
             http_object = HttpUrlConnection(get_cookie_url=loginUrl, get_cookie_request_data=post_data)
-            opener=http_object.request_with_cookies()
-            result=opener.open(testUrl)
+            result=http_object.request_with_cookies(testUrl)
             print(result.readlines())
         '''
         try:
