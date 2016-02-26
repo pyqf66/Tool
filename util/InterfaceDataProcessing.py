@@ -29,8 +29,8 @@ class InterfaceDataProcessing(object):
             processing_dict = dict()
             # 字典生成key和value的对应关系，value为方法对象而不是执行方法
             processing_dict["ytdyccrmcancel"] = self.ytdyccrm_cancel_func
-            if self.__interface_code in processing_dict:
-                return processing_dict[self.__interface_code]()
+            if self.__interface_code.decode("utf-8") in processing_dict:
+                return processing_dict[self.__interface_code.decode("utf-8")]()
             else:
                 return 0
         except Exception as e:
