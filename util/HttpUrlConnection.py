@@ -8,13 +8,13 @@
 import sys
 import simplejson
 
-if sys.version_info[0]==2:
+if sys.version_info[0] == 2:
     import httplib as http_client
     import urllib as urllib_parse
     import urllib2 as urllib_request
     import cookielib as ckjar
 
-if sys.version_info[0]==3:
+if sys.version_info[0] == 3:
     import http
     from http import client as http_client
     from http import cookiejar as ckjar
@@ -59,7 +59,7 @@ class HttpUrlConnection(object):
                     if type(url) == str:
                         self.__url = url
                 except:
-                    self.__url=url
+                    self.__url = url
                 logger.debug(self.__url)
                 scheme, rest = urllib_parse.splittype(self.__url)
                 # 拆分域名和路径
@@ -83,14 +83,14 @@ class HttpUrlConnection(object):
             self.__jdata = simplejson.dumps(parameters, ensure_ascii=False)
             self.__headers = headers
             self.__opener = None
-            self.__get_cookie_request_data=None
+            self.__get_cookie_request_data = None
             if get_cookie_url is not None:
                 cj = ckjar.CookieJar()
                 self.__opener = urllib_request.build_opener(urllib_request.HTTPCookieProcessor(cj))
                 self.__opener.addheaders = get_cookie_headers
                 if get_cookie_request_data is not None:
-                    self.__get_cookie_request_data=urllib_parse.urlencode(get_cookie_request_data).encode("utf-8")
-                self.__opener.open(get_cookie_url,self.__get_cookie_request_data)
+                    self.__get_cookie_request_data = urllib_parse.urlencode(get_cookie_request_data).encode("utf-8")
+                self.__opener.open(get_cookie_url, self.__get_cookie_request_data)
         except Exception as e:
             logger.error(e)
             logger.exception(u"捕获到错误如下:")
@@ -135,13 +135,13 @@ class HttpUrlConnection(object):
             print(result.readlines())
         '''
         try:
-            #实例化HttpUrlConnection时如果没传url则将request_with_cookies的url赋给self.__url
+            # 实例化HttpUrlConnection时如果没传url则将request_with_cookies的url赋给self.__url
             if self.__url is None:
                 self.__url = url
-            #实例化HttpUrlConnection时如果没传parameters则将request_with_cookies的parameters赋给self.__url
+            # 实例化HttpUrlConnection时如果没传parameters则将request_with_cookies的parameters赋给self.__url
             if self.__data is None:
                 self.__data = parameters
-            #已带cookie的对象必须存在且请求的链接url必传
+            # 已带cookie的对象必须存在且请求的链接url必传
             if self.__opener is not None and self.__url is not None:
                 html = self.__opener.open(self.__url, self.__data)
                 return html
