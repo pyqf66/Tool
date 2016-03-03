@@ -174,3 +174,11 @@ class HttpUrlConnection(object):
         except Exception as e:
             logger.error(e)
             logger.exception(u"捕获到错误如下:")
+
+    # 提供可以直接使用的带cookie的opener
+    def get_opener(self):
+        try:
+            return self.__opener
+        except Exception as e:
+            logger.error(e)
+            logger.exception(u"捕获到错误如下:")
