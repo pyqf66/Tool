@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e85e7264-9208-45a0-b1c7-21205128185a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/common/impl/__init__.py" afterPath="" />
-    </list>
+    <list default="true" id="e85e7264-9208-45a0-b1c7-21205128185a" name="Default" comment="" />
     <ignored path="Tool.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
