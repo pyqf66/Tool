@@ -149,12 +149,12 @@
         <option value="$PROJECT_DIR$/test/tmp_test.py" />
         <option value="$PROJECT_DIR$/conf/logging.conf" />
         <option value="$PROJECT_DIR$/util/logger.py" />
-        <option value="$PROJECT_DIR$/test/test_template.py" />
         <option value="$PROJECT_DIR$/Run.py" />
         <option value="$PROJECT_DIR$/util/caseManager/__init__.py" />
         <option value="$PROJECT_DIR$/util/InterfaceDataProcessing.py" />
         <option value="$PROJECT_DIR$/util/HttpUrlConnection.py" />
         <option value="$PROJECT_DIR$/common/util/OutputWithTemplate.py" />
+        <option value="$PROJECT_DIR$/test/test_template.py" />
       </list>
     </option>
   </component>
