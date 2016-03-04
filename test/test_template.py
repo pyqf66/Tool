@@ -2,17 +2,18 @@
 
 #########################################################
 #
-# 在文件目录下命令行执行py.test可直接执行所有带test开头的文件的测试,执行py.test -h可看帮助
-# 执行py.test -k "first"只取params中的0,执行py.test -s则打印程序中的print()
+# 在文件目录下命令行执行py.test可直接执行所有带test开头的文件的测试,执行py.case -h可看帮助
+# 执行py.case -k "first"只取params中的0,执行py.case -s则打印程序中的print()
 # 如果需要打日志则直接配置logging进行日志输出即可
 #
 #########################################################
 import sys
-sys.path.append("../")
 import pytest
 from common.util.logger import logger
 
+sys.path.append("../")
 logger.debug("测试")
+
 
 # 被测函数
 def tmp_func1(param1):
@@ -35,26 +36,45 @@ def tmp_fixture(request):
     return request.param
 
 
+# 带teardown的fixture
+@pytest.fixture()
+def tmp_fixture_with_last(request):
+    print("开始了！")
+
+    # teardown方法
+    def last_run():
+        print("结束了！")
+
+    # teardown
+    request.addfinalizer(last_run)
+    return 1
+
+
 # 测试用例函数
 def test_tmp_func1():
     logger.debug("测试1")
     print("测试2")
     assert tmp_func1(0) == 1
 
+
 def test_tmp_func2(tmp_fixture):
     assert tmp_func1(tmp_fixture) == 1
 
-@pytest.mark.parametrize("input,expected",[(1,2),(2,2)])
-def test_tmp_func3(input,expected):
-    assert tmp_func1(input) == expected
 
+def test_tmp_func3(tmp_fixture_with_last):
+    print("进行中！")
+    assert tmp_func1(tmp_fixture_with_last) == 1
+
+
+@pytest.mark.parametrize("input_data,expected", [(1, 2), (2, 2)])
+def test_tmp_func4(input_data, expected):
+    assert tmp_func1(input_data) == expected
 
 #########################################################
 #
 # 如何不想使用命令执行测试而是想在Run.py中直接执行
-# 则在Run.py中添加可执行的pytest.main()
-# pytest.main()中不添加参数则按默认配置运行项目中所有的符合条件的文件
-# 建议使用pytest.main("-s -v")
+# 则在Run.py中添加可执行的pytest.lib()
+# pytest.lib()中不添加参数则按默认配置运行项目中所有的符合条件的文件
+# 建议使用pytest.lib("-s -v")
 #
 #########################################################
-
