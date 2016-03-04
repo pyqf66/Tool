@@ -10,7 +10,7 @@ import logging
 import logging.config
 
 # 定义文件路径常量
-BASE_CURRENT_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_CURRENT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 BASE_DIR=BASE_CURRENT_DIR.replace("\\", "/")
 LOGGING_CONF_DIR = os.path.join(BASE_DIR + "/conf/", "logging.conf")
 LOGS_DIR = BASE_DIR + "/logs/"
