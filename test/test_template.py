@@ -10,7 +10,7 @@
 import sys
 sys.path.append("../")
 import pytest
-from util.logger import logger
+from common.util.logger import logger
 
 logger.debug("测试")
 

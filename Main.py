@@ -1,5 +1,5 @@
 # coding=utf-8
-from util.logger import logger
+from common.util.logger import logger
 
 class Main(object):
     try:

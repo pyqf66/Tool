@@ -8,7 +8,8 @@
 import configparser
 import os
 import platform
-from util.logger import logger
+
+from common.util.logger import logger
 
 # 定义文件路径常量
 BASE_CURRENT_DIR = os.path.dirname(os.path.dirname(__file__))

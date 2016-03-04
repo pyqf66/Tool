@@ -6,7 +6,8 @@
 # History: 2015/08/18 zhangyufeng 新建
 ###########################################
 import time
-from util.logger import logger
+
+from common.util.logger import logger
 
 
 class TimeStamp(object):

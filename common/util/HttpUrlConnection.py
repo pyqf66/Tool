@@ -6,6 +6,7 @@
 # History: 2015/11/15 zhangyufeng 新建
 ###########################################
 import sys
+
 import simplejson
 
 if sys.version_info[0] == 2:
@@ -15,13 +16,12 @@ if sys.version_info[0] == 2:
     import cookielib as ckjar
 
 if sys.version_info[0] == 3:
-    import http
     from http import client as http_client
     from http import cookiejar as ckjar
     import urllib.parse as urllib_parse
     import urllib.request as urllib_request
 
-from util.logger import logger
+from common.util.logger import logger
 
 
 class HttpUrlConnection(object):

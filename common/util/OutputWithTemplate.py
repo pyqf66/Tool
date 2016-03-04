@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 import xlrd
 import xlwt
-from util.TimeStamp import TimeStamp
-
 from util.logger import logger
+
+from common.util.TimeStamp import TimeStamp
 
 
 class OutputWithTemplate(object):

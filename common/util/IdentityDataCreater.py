@@ -9,7 +9,8 @@ import os
 import random
 from datetime import date
 from datetime import timedelta
-from util.logger import logger
+
+from common.util.logger import logger
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DC_PATH = BASE_DIR + "\districtcode.txt"

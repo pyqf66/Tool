@@ -5,10 +5,10 @@
 # Author: zhangyufeng
 # History: 2015/11/20 zhangyufeng 新建
 ###########################################
-from util.TimeStamp import TimeStamp
 from util.Md5 import Md5
-import simplejson
 from util.logger import logger
+
+from common.util.TimeStamp import TimeStamp
 
 
 class InterfaceDataProcessing(object):
