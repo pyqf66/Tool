@@ -10,16 +10,16 @@ from mysql import connector
 
 
 class GetSms(object):
-    def __init__(self, REDIS_HOST=None, REDIS_PORT=6379, REDIS_PASSWORD=None, MYSQL_USER=None, MYSQL_HOST=None,
-                 MYSQL_PORT=3306, MYSQL_PASSWORD=None, MYSQL_DB=None):
-        self.__redis_host = REDIS_HOST
-        self.__redis_port = REDIS_PORT
-        self.__redis_password = REDIS_PASSWORD
-        self.__mysql_user = MYSQL_USER
-        self.__mysql_host = MYSQL_HOST
-        self.__mysql_port = MYSQL_PORT
-        self.__mysql_password = MYSQL_PASSWORD
-        self.__mysql_db = MYSQL_DB
+    def __init__(self, redis_host=None, redis_port=6379, redis_password=None, mysql_user=None, mysql_host=None,
+                 mysql_port=3306, mysql_password=None, mysql_db=None):
+        self.__redis_host = redis_host
+        self.__redis_port = redis_port
+        self.__redis_password = redis_password
+        self.__mysql_user = mysql_user
+        self.__mysql_host = mysql_host
+        self.__mysql_port = mysql_port
+        self.__mysql_password = mysql_password
+        self.__mysql_db = mysql_db
 
     def get_sms_num_from_redis(self, redis_key_phone_number):
         r = redis.StrictRedis(host=self.__redis_host, port=self.__redis_port, password=self.__redis_password)
