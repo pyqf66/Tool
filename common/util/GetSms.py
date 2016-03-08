@@ -5,8 +5,8 @@
 # Author: zhangyufeng
 # History: 2016/3/7 zhangyufeng 新建
 ###########################################
-import redis
-from mysql import connector
+from common.dbHandles.MysqlHandler import MysqlHandler
+from common.dbHandles.RedisHandler import RedisHandler
 
 
 class GetSms(object):
@@ -22,24 +22,19 @@ class GetSms(object):
         self.__mysql_db = mysql_db
 
     def get_sms_num_from_redis(self, redis_key_phone_number):
-        r = redis.StrictRedis(host=self.__redis_host, port=self.__redis_port, password=self.__redis_password)
+        redis_object = RedisHandler(redis_host=self.__redis_host, redis_port=self.__redis_port,
+                                    redis_password=self.__redis_password)
         redis_key = str(redis_key_phone_number) + "authUserSendCode"
         # 由于取验证码时获取的是二进制数据，所以字符串化以后切片取值
-        redis_value = str(r.get(redis_key))
+        redis_value = str(redis_object.get_redis_data(redis_key))
         sms_num = redis_value[-5:-1]
         return sms_num
 
-    def get_sms_num_from_db(self, redis_key_phone_number):
+    def get_sms_num_from_db(self, phone_number):
         select_sql = "select sms_content from member_sms_log where sms_phone=" + str(
-            redis_key_phone_number) + " order by log_id desc"
-        m = connector.connect(user=self.__mysql_user, password=self.__mysql_password, host=self.__mysql_host,
-                              port=self.__mysql_port, database=self.__mysql_db)
-        cursor = m.cursor()
-        cursor.execute(select_sql)
-        sms_num_list = list()
-        for (num,) in cursor:
-            sms_num_list.append(num)
-        cursor.close()
-        m.close()
-        sms_num = sms_num_list[0]
+            phone_number) + " order by log_id desc"
+        mysql_object = MysqlHandler(mysql_user=self.__mysql_user, mysql_password=self.__mysql_password, mysql_host=self.__mysql_host,
+                                    mysql_port=self.__mysql_port, mysql_db=self.__mysql_db)
+        data_list = mysql_object.get_mysql_data(select_sql)
+        sms_num = data_list[0][0]
         return sms_num
