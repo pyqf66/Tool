@@ -25,3 +25,12 @@ class MysqlHandler(object):
         cursor.close()
         mysql_object.close()
         return data_list
+
+    def update_mysql_data(self,sql):
+        mysql_object = connector.connect(user=self.__mysql_user, password=self.__mysql_password, host=self.__mysql_host,
+                                         port=self.__mysql_port, database=self.__mysql_db)
+        cursor = mysql_object.cursor()
+        cursor.execute(sql)
+        mysql_object.commit()
+        cursor.close()
+        mysql_object.close()
