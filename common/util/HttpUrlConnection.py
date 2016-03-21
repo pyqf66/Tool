@@ -48,7 +48,10 @@ class HttpUrlConnection(object):
             if self.__method == "GET":
                 response = requests.get(url=self.__url, params=self.__parameters)
             else:
-                response = requests.post(url=self.__url, data=self.__parameters)
+                if self.__headers == {"Content-type": "application/json"}:
+                    response = requests.post(url=self.__url, json=self.__parameters)
+                else:
+                    response = requests.post(url=self.__url, data=self.__parameters)
             return response
         except:
             logger.exception("发送普通请求错误:")
@@ -59,12 +62,15 @@ class HttpUrlConnection(object):
             if self.__method == "GET":
                 response = self.__session_object.get(url=self.__url, params=self.__parameters)
             else:
-                response = self.__session_object.post(url=self.__url, data=self.__parameters)
+                if self.__headers == {"Content-type": "application/json"}:
+                    response = self.__session_object.post(url=self.__url, json=self.__parameters)
+                else:
+                    response = self.__session_object.post(url=self.__url, data=self.__parameters)
             return response
         except:
             logger.exception("带cookies请求错误：")
 
-    #获得带cookie对象
+    # 获得带cookie对象
     def get_session_object(self):
         try:
             return self.__session_object
