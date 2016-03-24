@@ -45,4 +45,5 @@ if os.path.exists(FILE_DEBUG_DIR) is False:
 
 # 读取配置文件并建立日志对象
 logging.config.fileConfig(LOGGING_CONF_DIR)
-logger = logging.getLogger()
+logger = logging.getLogger("all")
+console = logging.getLogger()
