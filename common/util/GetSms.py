@@ -35,10 +35,11 @@ class GetSms(object):
     def get_sms_num_from_db(self, phone_number):
         select_sql = "select sms_content from member_sms_log where sms_phone=" + str(
             phone_number) + " order by log_id desc"
-        mysql_object = MysqlHandler(mysql_user=self.__mysql_user, mysql_password=self.__mysql_password, mysql_host=self.__mysql_host,
+        mysql_object = MysqlHandler(mysql_user=self.__mysql_user, mysql_password=self.__mysql_password,
+                                    mysql_host=self.__mysql_host,
                                     mysql_port=self.__mysql_port, mysql_db=self.__mysql_db)
         data_list = mysql_object.get_mysql_data(select_sql)
         sms_num = "无对应手机号的短信验证码"
-        if data_list != []:
+        if data_list:
             sms_num = data_list[0][0]
         return sms_num

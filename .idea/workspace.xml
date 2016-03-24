@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e85e7264-9208-45a0-b1c7-21205128185a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/util/GetSms.py" afterPath="$PROJECT_DIR$/common/util/GetSms.py" />
     </list>
     <ignored path="Tool.iws" />
@@ -68,11 +67,11 @@
       <file leaf-file-name="GetSms.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/common/util/GetSms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.027072757">
-              <caret line="27" column="38" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.87309647">
+              <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
               <folding>
                 <element signature="e#201#255#0" expanded="true" />
-                <marker date="1458805440216" expanded="true" signature="1482:1596" placeholder="select sms_c... member_sms_log" />
+                <marker date="1458805522850" expanded="true" signature="1482:1596" placeholder="select sms_c... member_sms_log" />
               </folding>
             </state>
           </provider>
@@ -1022,11 +1021,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/common/util/GetSms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.027072757">
-          <caret line="27" column="38" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.87309647">
+          <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
           <folding>
             <element signature="e#201#255#0" expanded="true" />
-            <marker date="1458805440216" expanded="true" signature="1482:1596" placeholder="select sms_c... member_sms_log" />
+            <marker date="1458805522850" expanded="true" signature="1482:1596" placeholder="select sms_c... member_sms_log" />
           </folding>
         </state>
       </provider>
