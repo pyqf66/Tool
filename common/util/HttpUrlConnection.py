@@ -37,7 +37,7 @@ class HttpUrlConnection(object):
         if self.__get_cookie_method == "GET":
             response_oject_with_cookie = self.__session_object.get(url=self.__get_cookie_url,
                                                                    data=self.__get_cookie_request_data)
-        else:
+        if self.__get_cookie_method == "POST":
             response_oject_with_cookie = self.__session_object.post(url=self.__get_cookie_url,
                                                                     data=self.__get_cookie_request_data,
                                                                     headers=self.__get_cookie_headers)
