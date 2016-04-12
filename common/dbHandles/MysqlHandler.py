@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from mysql import connector
+import pymysql
 
 
 class MysqlHandler(object):
@@ -15,8 +15,8 @@ class MysqlHandler(object):
         :param sql: sql语句
         :return: 返回结果list，每组结果存在一个元组里
         '''
-        mysql_object = connector.connect(user=self.__mysql_user, password=self.__mysql_password, host=self.__mysql_host,
-                              port=self.__mysql_port, database=self.__mysql_db)
+        mysql_object = pymysql.connect(user=self.__mysql_user, passwd=self.__mysql_password, host=self.__mysql_host,
+                              port=self.__mysql_port, db=self.__mysql_db)
         cursor = mysql_object.cursor()
         cursor.execute(sql)
         data_list = list()
@@ -27,8 +27,8 @@ class MysqlHandler(object):
         return data_list
 
     def update_mysql_data(self,sql):
-        mysql_object = connector.connect(user=self.__mysql_user, password=self.__mysql_password, host=self.__mysql_host,
-                                         port=self.__mysql_port, database=self.__mysql_db)
+        mysql_object = connector.connect(user=self.__mysql_user, passwd=self.__mysql_password, host=self.__mysql_host,
+                                         port=self.__mysql_port, db=self.__mysql_db)
         cursor = mysql_object.cursor()
         cursor.execute(sql)
         mysql_object.commit()
