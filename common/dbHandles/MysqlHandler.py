@@ -27,7 +27,7 @@ class MysqlHandler(object):
         return data_list
 
     def update_mysql_data(self,sql):
-        mysql_object = connector.connect(user=self.__mysql_user, passwd=self.__mysql_password, host=self.__mysql_host,
+        mysql_object = pymysql.connect(user=self.__mysql_user, passwd=self.__mysql_password, host=self.__mysql_host,
                                          port=self.__mysql_port, db=self.__mysql_db)
         cursor = mysql_object.cursor()
         cursor.execute(sql)
